@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return DB::table('padlets')->get();
-    //return view('welcome');
+    $padlets = DB::table('padlets')->get();
+    // return $padlets;
+    return view('welcome', compact('padlets'));
 });
