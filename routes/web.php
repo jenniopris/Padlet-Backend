@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $padlets = DB::table('padlets')->get();
-    // return $padlets;
-    return view('welcome', compact('padlets'));
+    $users = DB::table('users')->get();
+    $entries = DB::table('entries')->get();
+    $comments = DB::table('comments')->get();
+    $ratings = DB::table('ratings')->get();
+
+    return view('welcome', compact('padlets', 'users', 'entries', 'comments', 'ratings'));
 });

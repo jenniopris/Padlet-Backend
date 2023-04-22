@@ -17,10 +17,29 @@ class PadletsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('padlets')->insert([
-            'name' => 'Padlet 1',
-            'is_public' => true,
-            'user_id' => 1,
-        ]);
+        $names = [
+            'First Padlet',
+            'Second Padlet',
+            'Third Padlet',
+            'Fourth Padlet',
+            'Fifth Padlet',
+            'Sixth Padlet',
+            'Seventh Padlet',
+            'Eighth Padlet',
+            'Ninth Padlet',
+            'Tenth Padlet',
+        ];
+
+        $data = [];
+
+        for ($i = 0; $i < 10; $i++) {
+            $data[] = [
+                'name' => $names[array_rand($names)],
+                'is_public' => true,
+                'user_id' => 1,
+            ];
+        }
+
+        DB::table('padlets')->insert($data);
     }
 }
