@@ -6,6 +6,7 @@ use App\Http\Controllers\PadletController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +48,10 @@ Route::get('ratings/{id}', [RatingController::class, 'findByID']);
 Route::post('ratings', [RatingController::class, 'save']);
 Route::put('ratings/{id}', [RatingController::class, 'update']);
 Route::delete('ratings/{id}', [RatingController::class, 'delete']);
+
+Route::get('comments', [CommentController::class, 'index']);
+Route::get('comments/{id}', [CommentController::class, 'findByID']);
+Route::get('comments/entry/{entry_id}', [CommentController::class, 'getCommentByEntryID']);
+Route::post('comments', [CommentController::class, 'save']);
+Route::put('comments/{id}', [CommentController::class, 'update']);
+Route::delete('comments/{id}', [CommentController::class, 'delete']);
