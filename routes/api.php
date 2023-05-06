@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PadletController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntryController;
+use App\Http\Controllers\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,9 @@ Route::get('entries/search/{searchTerm}', [EntryController::class, 'findBySearch
 Route::post('entries', [EntryController::class, 'save']);
 Route::put('entries/{id}', [EntryController::class, 'update']);
 Route::delete('entries/{id}', [EntryController::class, 'delete']);
+
+Route::get('ratings', [RatingController::class, 'index']);
+Route::get('ratings/{id}', [RatingController::class, 'findByID']);
+Route::post('ratings', [RatingController::class, 'save']);
+Route::put('ratings/{id}', [RatingController::class, 'update']);
+Route::delete('ratings/{id}', [RatingController::class, 'delete']);
