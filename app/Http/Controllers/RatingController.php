@@ -22,6 +22,12 @@ class RatingController extends Controller
         return $rating != null ? response()->json($rating, 200) : response()->json("Entry not found", 404);
     }
 
+    public function getRatingsByEntryID(string $entry_id): JsonResponse
+    {
+        $ratings = Rating::where('entry_id', $entry_id)->with(['user'])->get();
+        return $ratings != null ? response()->json($ratings, 200) : response()->json("Entry not found", 404);
+    }
+
     public function save(Request $request): JsonResponse
     {
         $validatedData = $request->validate([

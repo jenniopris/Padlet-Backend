@@ -46,6 +46,7 @@ Route::delete('entries/{id}', [EntryController::class, 'delete']);
 
 Route::get('ratings', [RatingController::class, 'index']);
 Route::get('ratings/{id}', [RatingController::class, 'findByID']);
+Route::get('ratings/entry/{entry_id}', [RatingController::class, 'getRatingsByEntryID']);
 Route::post('ratings', [RatingController::class, 'save']);
 Route::put('ratings/{id}', [RatingController::class, 'update']);
 Route::delete('ratings/{id}', [RatingController::class, 'delete']);
