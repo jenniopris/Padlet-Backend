@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PadletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('padlets', [PadletController::class, 'index']);
+Route::get('padlets/{user_id}', [PadletController::class, 'findByUserID']);
+Route::post('padlets', [PadletController::class, 'save']);
+Route::put('padlets/{id}', [PadletController::class, 'update']);
+Route::delete('padlets/{id}', [PadletController::class, 'delete']);
