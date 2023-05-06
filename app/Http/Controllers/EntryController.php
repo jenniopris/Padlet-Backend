@@ -35,6 +35,14 @@ class EntryController extends Controller
         return response()->json($entries, 200);
     }
 
+    public function getEntriesByPadletID(string $padlet_id): JsonResponse
+    {
+        $entries = Entry::with(['user', 'rating', 'comment'])
+            ->where('padlet_id', '=', $padlet_id)
+            ->get();
+        return response()->json($entries, 200);
+    }
+
     public function save(Request $request): JsonResponse
     {
         $request = $this->parseRequest($request);

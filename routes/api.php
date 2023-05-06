@@ -39,6 +39,7 @@ Route::delete('users/{id}', [UserController::class, 'delete']);
 Route::get('entries', [EntryController::class, 'index']);
 Route::get('entries/{id}', [EntryController::class, 'findByID']);
 Route::get('entries/search/{searchTerm}', [EntryController::class, 'findBySearchTerm']);
+Route::get('entries/padlet/{padlet_id}', [EntryController::class, 'getEntriesByPadletID']);
 Route::post('entries', [EntryController::class, 'save']);
 Route::put('entries/{id}', [EntryController::class, 'update']);
 Route::delete('entries/{id}', [EntryController::class, 'delete']);
