@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Entry extends Model
 {
@@ -16,6 +17,7 @@ class Entry extends Model
         'padlet_id',
         'user_id',
         'type',
+        'name',
         'content',
     ];
 
@@ -34,5 +36,21 @@ class Entry extends Model
      */
     public function user() : BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * entry has n comments
+     * @return HasMany
+     */
+    public function comment() : HasMany {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * entry has n ratings
+     * @return HasMany
+     */
+    public function rating() : HasMany {
+        return $this->hasMany(Rating::class);
     }
 }

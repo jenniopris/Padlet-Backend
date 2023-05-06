@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PadletController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EntryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,10 @@ Route::get('users/search/{searchTerm}', [UserController::class, 'findBySearchTer
 Route::post('users', [UserController::class, 'save']);
 Route::put('users/{id}', [UserController::class, 'update']);
 Route::delete('users/{id}', [UserController::class, 'delete']);
+
+Route::get('entries', [EntryController::class, 'index']);
+Route::get('entries/{id}', [EntryController::class, 'findByID']);
+Route::get('entries/search/{searchTerm}', [EntryController::class, 'findBySearchTerm']);
+Route::post('entries', [EntryController::class, 'save']);
+Route::put('entries/{id}', [EntryController::class, 'update']);
+Route::delete('entries/{id}', [EntryController::class, 'delete']);
