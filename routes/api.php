@@ -24,7 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('padlets', [PadletController::class, 'index']);
-Route::get('padlets/{user_id}', [PadletController::class, 'findByUserID']);
+Route::get('padlets/{id}', [PadletController::class, 'findByPadletID']);
+Route::get('padlets/findByUserId/{user_id}', [PadletController::class, 'findByUserID']);
 Route::post('padlets', [PadletController::class, 'save']);
 Route::put('padlets/{id}', [PadletController::class, 'update']);
 Route::delete('padlets/{id}', [PadletController::class, 'delete']);
