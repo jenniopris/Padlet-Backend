@@ -20,8 +20,9 @@ class PadletController extends Controller
 
     public function findByPadletID($id): JsonResponse
     {
-        $padlets = Padlet::with('entry', 'user')->where('id', $id)->get();
-        return response()->json($padlets, 200);
+        $padlet = Padlet::with('entry', 'user')
+            ->where('id', $id)->first();
+        return response()->json($padlet, 200);
     }
 
     public function findByUserID($id): JsonResponse
