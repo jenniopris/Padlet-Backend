@@ -32,7 +32,7 @@ class RatingController extends Controller
     {
         $validatedData = $request->validate([
             'entry_id' => 'required',
-            'user_id' => 'required',
+            'user_id' => 'required|unique:ratings,user_id,NULL,id,entry_id,' . $request->entry_id,
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
@@ -48,7 +48,7 @@ class RatingController extends Controller
             }
 
             DB::commit();
-            // return a vaild http response
+            // return a valid http response
             return response()->json($rating, 201);
         } catch (\Exception $e) {
             // rollback all queries
@@ -74,7 +74,7 @@ class RatingController extends Controller
             $rating->update($request->all());
 
             DB::commit();
-            // return valid http response
+            // return a valid http response
             return response()->json($rating, 201);
         } catch (\Exception $e) {
             // rollback all queries
