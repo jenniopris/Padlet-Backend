@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,6 +18,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        /*
         $data = [
             [
                 'first_name' => 'John',
@@ -79,6 +82,15 @@ class UsersTableSeeder extends Seeder
             ],
         ];
 
+
         DB::table('users')->insert($data);
+        */
+        $user = new \App\Models\User;
+        $user->first_name = 'John';
+        $user->last_name = 'Doe';
+        $user->email = 'test@test.at';
+        $user->role = 'user';
+        $user->password = bcrypt('password');
+        $user->save();
     }
 }
