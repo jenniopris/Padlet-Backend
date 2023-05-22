@@ -14,7 +14,12 @@ class PadletController extends Controller
 {
     public function index(): JsonResponse
     {
-        $padlets = Padlet::with('entry', 'user')->get();
+        $user = auth()->user();
+
+        $padlets = Padlet::with('entry', 'user')
+            ->where('is_public', true)
+            ->orWhere('user_id', $user?->id)
+            ->get();
         return response()->json($padlets, 200);
     }
 
