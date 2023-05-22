@@ -19,66 +19,43 @@ class RatingController extends Controller
     public function findByID(string $id): JsonResponse
     {
         $rating = Rating::where('id', $id)->with(['user'])->first();
-        return $rating != null ? response()->json($rating, 200) : response()->json("Entry not found", 404);
+        return $rating != null ? response()->json($rating, 200) : response()->json(null, 201);
     }
 
     public function getRatingByEntryIDAndUserID(string $entry_id, string $user_id): JsonResponse {
         $rating = Rating::where('entry_id', $entry_id)->where('user_id', $user_id)->with(['user'])->first();
-        return $rating != null ? response()->json($rating, 200) : response()->json("Entry not found", 404);
+        return $rating != null ? response()->json($rating, 200) : response()->json(null, 201);
     }
 
-    public function save(Request $request): JsonResponse
+    public function save_update(Request $request): JsonResponse
     {
         $validatedData = $request->validate([
             'entry_id' => 'required',
-            'user_id' => 'required|unique:ratings,user_id,NULL,id,entry_id,' . $request->entry_id,
+            'user_id' => 'required',
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
         DB::beginTransaction();
 
         try {
-            $rating = Rating::create($validatedData);
+            $existing = Rating::where('entry_id', $request->entry_id)
+                ->where('user_id', $request->user_id)
+                ->first();
 
-            // save user
-            if (isset($request['user']) && is_array($request['user'])) {
-                $user = User::create($request['user']);
-                $rating->user()->associate($user);
+            if($existing) {
+                $existing->rating = $validatedData['rating'];
+                $existing->save();
+                DB::commit();
+                return response()->json($existing, 201);
+            } else {
+                $rating = Rating::create($validatedData);
+                DB::commit();
+                return response()->json($rating, 201);
             }
-
-            DB::commit();
-            // return a valid http response
-            return response()->json($rating, 201);
         } catch (\Exception $e) {
             // rollback all queries
             DB::rollBack();
             return response()->json("saving rating failed: " . $e->getMessage(), 420);
-        }
-    }
-
-    private function parseRequest(Request $request): Request
-    {
-        // get date and convert it - its in ISO 8601, e.g. "2018-01-01T23:00:00.000Z"
-        $date = new \DateTime($request->published);
-        $request['published'] = $date;
-        return $request;
-    }
-
-    public function update(Request $request, string $id): JsonResponse
-    {
-        DB::beginTransaction();
-        try {
-            $rating = Rating::with(['user'])->findOrFail($id);
-            $request = $this->parseRequest($request);
-            $rating->update($request->all());
-
-            DB::commit();
-            // return a valid http response
-            return response()->json($rating, 201);
-        } catch (\Exception $e) {
-            // rollback all queries
-            DB::rollBack();
-            return response()->json("updating rating failed: " . $e->getMessage(), 420);
         }
     }
 

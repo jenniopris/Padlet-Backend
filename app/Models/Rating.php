@@ -16,8 +16,6 @@ class Rating extends Model
         'rating',
     ];
 
-    protected $primaryKey = ['entry_id', 'user_id'];
-    public $incrementing = false;
 
     /**
      * rating is assigned to entry (1:1)

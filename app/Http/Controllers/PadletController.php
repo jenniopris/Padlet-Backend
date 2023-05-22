@@ -76,18 +76,6 @@ class PadletController extends Controller
             $request = $this->parseRequest($request);
             $padlet->update($request->all());
 
-            // delete old entries
-            foreach ($padlet->entry as $entry) {
-                $entry->delete();
-            }
-
-            // save new entries
-            if (isset($request['entries']) && is_array($request['entries'])) {
-                foreach ($request['entries'] as $entry) {
-                    $entry = Entry::create($entry);
-                    $padlet->entry()->save($entry);
-                }
-            }
             DB::commit();
             // return valid http response
             return response()->json($padlet, 201);

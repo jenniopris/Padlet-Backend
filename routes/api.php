@@ -63,8 +63,8 @@ Route::group(['middleware' => ['api', 'auth.jwt', 'auth.admin']], function () {
     Route::put('entries/{id}', [EntryController::class, 'update']);
     Route::delete('entries/{id}', [EntryController::class, 'delete']);
 
-    Route::post('ratings', [RatingController::class, 'save']);
-    Route::put('ratings/{id}', [RatingController::class, 'update']);
+    Route::post('ratings', [RatingController::class, 'save_update']);
+    Route::put('ratings/{id}', [RatingController::class, 'save_update']);
     Route::delete('ratings/{id}', [RatingController::class, 'delete']);
 
     Route::post('comments', [CommentController::class, 'save']);
