@@ -58,7 +58,7 @@ class PadletController extends Controller
             return response()->json("Padlet not found", 404);
         }
 
-        if (!($padlet->is_public || $padletUserRole == 'viewer' || $padletUserRole == 'editor' || $padletUserRole == 'owner')){
+        if (!($padlet->is_public || $padletUserRole == 'viewer' || $padletUserRole == 'editor' || $padletUserRole == 'owner' || $padlet->user_id == $user->id)) {
             return response()->json("You are not allowed to perform this action", 401);
         }
 
@@ -135,7 +135,7 @@ class PadletController extends Controller
                 return response()->json("Padlet not found", 404);
             }
 
-            if (!($padlet->is_public || $padletUserRole == 'viewer' || $padletUserRole == 'editor' || $padletUserRole == 'owner')){
+            if (!($padlet->is_public || $padletUserRole == 'viewer' || $padletUserRole == 'editor' || $padletUserRole == 'owner' || $padlet->user_id === $user->id)){
                 return response()->json("You are not allowed to perform this action", 401);
             }
 
@@ -165,7 +165,7 @@ class PadletController extends Controller
             return response()->json("Padlet not found", 404);
         }
 
-        if (!($padlet->is_public || $padletUserRole == 'viewer' || $padletUserRole == 'editor' || $padletUserRole == 'owner')){
+        if (!($padlet->is_public || $padletUserRole == 'viewer' || $padletUserRole == 'editor' || $padletUserRole == 'owner' || $padlet->user_id === $user->id)){
             return response()->json("You are not allowed to perform this action", 401);
         }
 
