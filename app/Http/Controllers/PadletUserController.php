@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\PadletUser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PadletUserController extends Controller
 {
-    public function getRoleInvitesByUserId($id)
+    public function getRoleInvitesByUserId($id): JsonResponse
     {
         $invites = PadletUser::with(['padlet'])
             ->where('user_id', $id)
@@ -17,7 +18,7 @@ class PadletUserController extends Controller
         return response()->json($invites, 200);
     }
 
-    public function save_update(Request $request)
+    public function save_update(Request $request): JsonResponse
     {
         $data = $request->all();
 
@@ -33,7 +34,7 @@ class PadletUserController extends Controller
         return response()->json($data, 200);
     }
 
-    public function delete($id)
+    public function delete($id): JsonResponse
     {
         $role = PadletUser::where('id', $id);
 

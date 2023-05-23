@@ -72,7 +72,7 @@ Route::group(['middleware' => ['api', 'auth.jwt', 'auth.admin']], function () {
     Route::put('comments/{id}', [CommentController::class, 'update']);
     Route::delete('comments/{id}', [CommentController::class, 'delete']);
 
-    Route::get('users/{id}/invites', [PadletUserController::class,'getInvitedByUserId']);
+    Route::get('users/{id}/invites', [PadletUserController::class,'getRoleInvitesByUserId']);
     Route::post('roles', [PadletUserController::class,'save_update']);
     Route::put('roles', [PadletUserController::class,'save_update']);
     Route::delete('roles/{id}', [PadletUserController::class,'delete']);
