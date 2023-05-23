@@ -53,6 +53,11 @@ class UserController extends Controller
             ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%')
             ->orWhere('email', 'LIKE', '%' . $searchTerm . '%')
             ->get();
+
+        if(!$users) {
+            return response()->json("No users with given search term found", 404);
+        }
+
         return response()->json($users, 200);
     }
 

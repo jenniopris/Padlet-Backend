@@ -22,7 +22,8 @@ class PadletUserController extends Controller
     {
         $data = $request->all();
 
-        $role = PadletUser::where('id', $data['id'])
+        $role = PadletUser::where('padlet_id', $data['padlet_id'])
+            ->where('user_id', $data['user_id'])
             ->first();
 
         if ($role) {
