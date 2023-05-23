@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PadletUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PadletController;
@@ -70,4 +71,9 @@ Route::group(['middleware' => ['api', 'auth.jwt', 'auth.admin']], function () {
     Route::post('comments', [CommentController::class, 'save']);
     Route::put('comments/{id}', [CommentController::class, 'update']);
     Route::delete('comments/{id}', [CommentController::class, 'delete']);
+
+    Route::get('users/{id}/invites', [PadletUserController::class,'getInvitedByUserId']);
+    Route::post('roles', [PadletUserController::class,'save_update']);
+    Route::put('roles', [PadletUserController::class,'save_update']);
+    Route::delete('roles/{id}', [PadletUserController::class,'delete']);
 });

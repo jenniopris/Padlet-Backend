@@ -32,4 +32,9 @@ class Padlet extends Model
     public function entry() : HasMany {
         return $this->hasMany(Entry::class);
     }
+
+    public function padletUser(): HasMany
+    {
+        return $this->hasMany(PadletUser::class);
+    }
 }

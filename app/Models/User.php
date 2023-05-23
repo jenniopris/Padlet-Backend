@@ -77,6 +77,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Rating::class);
     }
 
+    public function padletUser(): HasMany
+    {
+        return $this->hasMany(PadletUser::class);
+    }
+
     public function getJWTIdentifier() {
         return $this->getKey();
     }

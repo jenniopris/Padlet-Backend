@@ -21,8 +21,29 @@ class UserController extends Controller
 
     public function findByUserID(string $id): JsonResponse
     {
-        $user = User::where('id', $id)->with(['padlet', 'entry', 'comment', 'rating'])->first();
-        return $user != null ? response()->json($user, 200) : response()->json("User not found", 404);
+        $user = User::with(['padlet', 'entry', 'comment', 'rating', 'padletUser'])
+            ->where('id', $id)
+            ->first();
+
+        if(!$user) {
+            return response()->json("User not found", 404);
+        }
+
+        $viewInvites = [];
+        $editInvites = [];
+
+        foreach ($user->padletUser as $padletUser) {
+            if ($padletUser->role === 'invite-viewer') {
+                $viewInvites[] = $padletUser->padlet_id;
+            } else if ($padletUser->role === 'invite-editor') {
+                $editInvites[] = $padletUser->padlet_id;
+            }
+        }
+
+        $user->viewInvites = $viewInvites;
+        $user->editInvites = $editInvites;
+
+        return response()->json($user, 200);
     }
 
     public function findBySearchTerm(string $searchTerm): JsonResponse
