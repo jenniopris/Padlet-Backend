@@ -48,9 +48,10 @@ Route::get('comments/{id}', [CommentController::class, 'findByID']);
 Route::get('comments/entry/{entry_id}', [CommentController::class, 'getCommentByEntryID']);
 
 Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('auth/register', [AuthController::class, 'register']);
 
 // methods which need authenfication - JWT Token
-Route::group(['middleware' => ['api', 'auth.jwt', 'auth.admin']], function () {
+Route::group(['middleware' => ['api', 'auth.jwt']], function () {
     Route::post('auth/logout', [AuthController::class, 'logout']);
 
     Route::put('padlets/{id}', [PadletController::class, 'update']);

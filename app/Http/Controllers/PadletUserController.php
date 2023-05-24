@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PadletUser;
+use App\Models\User;
+use App\Models\Padlet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -14,6 +16,13 @@ class PadletUserController extends Controller
             ->where('user_id', $id)
             ->where('role', 'like', 'invite%')
             ->get();
+
+        $invites->each(function ($invite) {
+            $padlet = Padlet::with('user')
+                ->where('id', $invite->padlet_id)
+                ->first();
+            $invite->invited_by = $padlet->user->first_name . ' ' . $padlet->user->last_name;
+        });
 
         return response()->json($invites, 200);
     }
